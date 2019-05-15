@@ -1,6 +1,6 @@
 {
   "name": "jwt-redis",
-  "version": "5.0.4",
+  "version": "5.0.5",
   "description": "",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
@@ -17,10 +17,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/Natashkinsasha/jwt-redis.git"
+    "url": "git://github.com/Natashkinsasha/jwt-redis-v2.git"
   },
   "bugs": {
-    "url": "git://github.com/Natashkinsasha/jwt-redis.git/issues",
+    "url": "git://github.com/Natashkinsasha/jwt-redis-v2.git/issues",
     "email": "natashkinsasga@gmail.com"
   },
   "devDependencies": {
