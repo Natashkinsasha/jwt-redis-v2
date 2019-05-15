@@ -141,3 +141,7 @@ var options = {
 }
 var jwtr = new JWTR(redis, options);
 ```
+
+# TypesScript
+
+This library have typing in module.

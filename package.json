@@ -1,6 +1,6 @@
 {
   "name": "jwt-redis",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "description": "",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
@@ -12,15 +12,15 @@
   "author": "Alex Natashkin <natashkinsasha@gmail.com>",
   "license": "ISC",
   "keywords": [
-    "localizer",
-    "n18"
+    "jwt",
+    "redis"
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/Natashkinsasha/node-localizer"
+    "url": "git://github.com/Natashkinsasha/jwt-redis.git"
   },
   "bugs": {
-    "url": "https://github.com/Natashkinsasha/node-localizer/issues",
+    "url": "git://github.com/Natashkinsasha/jwt-redis.git/issues",
     "email": "natashkinsasga@gmail.com"
   },
   "devDependencies": {
@@ -36,7 +36,8 @@
     "should": "^13.2.3",
     "ts-mocha": "^6.0.0",
     "ts-node-dev": "^1.0.0-pre.39",
-    "typescript": "^3.4.5"
+    "typescript": "^3.4.5",
+    "chai-as-promised": "^7.1.1"
   },
   "dependencies": {
     "@types/ioredis": "^4.0.10",
@@ -47,7 +48,6 @@
     "redis": "^2.8.0",
     "ioredis": "^4.9.3",
     "@types/redis": "^2.8.12",
-    "@types/ioredis": "^4.0.10",
-    "chai-as-promised": "^7.1.1"
+    "@types/ioredis": "^4.0.10"
   }
 }
