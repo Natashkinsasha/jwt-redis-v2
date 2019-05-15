@@ -1,0 +1,7 @@
+  --require should
+  --reporter dot
+  --ui bdd
+  --require ts-node/register
+  --recursive
+  --timeout 10000
+

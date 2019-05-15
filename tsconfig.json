@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "outDir": "build",
+    "module": "commonjs",
+    "target": "es2017",
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "experimentalDecorators": true,
+    "strictNullChecks": true,
+    "emitDecoratorMetadata": true,
+    "inlineSourceMap": true,
+    "moduleResolution": "Node",
+    "removeComments": true,
+    "declaration": true,
+    "typeRoots": [
+      "typing",
+      "node_modules/@types"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "*": [
+        "./typing/*"
+      ]
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "build"
+  ]
+}
