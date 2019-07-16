@@ -27,7 +27,8 @@ This library is quite fresh, and maybe has bugs. Write me an **email** to *natas
 
 ```javascript
 var redis = require('redis');
-var JWTR =  require('jwt-redis');
+var JWTR =  require('jwt-redis').default;
+//ES6 import JWTR from 'jwt-redis';
 var redisClient = redis.createClient();
 var jwtr = new JWTR(redisClient);
 
