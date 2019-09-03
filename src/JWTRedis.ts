@@ -28,7 +28,7 @@ export default class JWTRedis {
         return Promise.resolve()
             .then(async () => {
                 const jti = payload.jti || generateId(10);
-                const token: string = jsonwebtoken.sign(payload, secretOrPrivateKey, options);
+                const token: string = jsonwebtoken.sign({...payload, jti}, secretOrPrivateKey, options);
                 const decoded: any = jsonwebtoken.decode(token);
                 const key = this.options.prefix + jti;
                 if (decoded.exp) {
