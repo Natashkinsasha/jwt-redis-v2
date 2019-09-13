@@ -34,7 +34,7 @@ export default class JWTRedis {
                 if (decoded.exp) {
                     await this.redis.setExp(key, 'true', 'EX', Math.floor(decoded.exp - Date.now() / 1000));
                 }
-                await this.redis.set(key, 'true')
+                await this.redis.set(key, 'true');
                 return token;
             })
     }
