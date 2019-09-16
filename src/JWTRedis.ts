@@ -33,8 +33,9 @@ export default class JWTRedis {
                 const key = this.options.prefix + jti;
                 if (decoded.exp) {
                     await this.redis.setExp(key, 'true', 'EX', Math.floor(decoded.exp - Date.now() / 1000));
+                } else{
+                    await this.redis.set(key, 'true');
                 }
-                await this.redis.set(key, 'true');
                 return token;
             })
     }
