@@ -33,7 +33,8 @@ var redisClient = redis.createClient();
 var jwtr = new JWTR(redisClient);
 
 var secret = 'secret';
-var payload = {};
+var jti = 'test';
+var payload = { jti };
 
 // Create a token
 jwtr.sign(payload, secret)
@@ -43,7 +44,7 @@ jwtr.sign(payload, secret)
     })
     .then(()=>{
             // Destroying the token
-            return jwtr.destroy(token, secret);
+            return jwtr.destroy(jti, secret);
     });
 ```
 
