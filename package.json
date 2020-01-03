@@ -1,6 +1,6 @@
 {
   "name": "jwt-redis",
-  "version": "5.0.8",
+  "version": "5.0.10",
   "description": "",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",

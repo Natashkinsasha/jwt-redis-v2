@@ -71,10 +71,10 @@ If **jti** is not present, then **jti** is generated randomly by the library.
 
 # Destroy token
 
-You can destroy the token through the token itself.
+You can destroy the token through jti.
 
 ```javascript
-    await jwtr.destroy(token)
+    await jwtr.destroy(jti)
 ```
 
 
@@ -125,8 +125,8 @@ Method for creating a token.
 Method for verifying a token
 ### jwtr.verify<T>(token, secretOrPublicKey, [options]): Promise<T> ###
 
-Method for breaking the token (if the token does not pass validation, then the error pops up)
-### jwtr.destroy(token, [options]): Promise<void> ###
+Method for breaking the token
+### jwtr.destroy(jti, [options]): Promise<void> ###
 
 Method for decoding token
 ### jwt.decode<T>(token, [options]): T ###
