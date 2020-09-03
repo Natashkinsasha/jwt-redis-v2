@@ -29,13 +29,13 @@ export default class Redis {
         });
     }
 
-    public del(key: string): Promise<void>{
+    public del(key: string): Promise<boolean>{
         return new Promise((resolve, reject)=>{
-            return this.redisClient.del(key, (err: Error)=>{
+            return this.redisClient.del(key, (err: Error, number)=>{
                 if (err) {
                     return reject(err);
                 }
-                return resolve();
+                return resolve(!!number);
             });
         });
     }

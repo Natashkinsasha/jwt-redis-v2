@@ -22,12 +22,20 @@ describe('Test destroy', () => {
         jwtRedis.sign(payload, key)
             .then((token: string) => {
                 return jwtRedis.destroy(payload.jti)
-                    .then(()=>{
+                    .then((is)=>{
+                        expect(is).to.equal(true);
                         expect(jwtRedis.verify(token, key)).to.be.rejectedWith(TokenDestroyedError);
                         done();
                     })
             })
             .catch(done);
+    });
+
+    it('2', () => {
+        return jwtRedis.destroy('jti')
+            .then((is) => {
+                expect(is).to.equal(false);
+            })
     });
 
 });

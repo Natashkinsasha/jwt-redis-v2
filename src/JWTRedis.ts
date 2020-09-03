@@ -24,23 +24,20 @@ export default class JWTRedis {
         this.redis = new Redis(redisClient);
     }
 
-    public sign<T extends object & { jti?: string }>(payload: T, secretOrPrivateKey: Secret, options?: SignOptions): Promise<string> {
-        return Promise.resolve()
-            .then(async () => {
-                const jti = payload.jti || generateId(10);
-                const token: string = jsonwebtoken.sign({...payload, jti}, secretOrPrivateKey, options);
-                const decoded: any = jsonwebtoken.decode(token);
-                const key = this.options.prefix + jti;
-                if (decoded.exp) {
-                    await this.redis.setExp(key, 'true', 'EX', Math.floor(decoded.exp - Date.now() / 1000));
-                } else{
-                    await this.redis.set(key, 'true');
-                }
-                return token;
-            })
+    public sign = async <T extends object & { jti?: string }> (payload: T, secretOrPrivateKey: Secret, options?: SignOptions): Promise<string> => {
+        const jti = payload.jti || generateId(10);
+        const token: string = jsonwebtoken.sign({...payload, jti}, secretOrPrivateKey, options);
+        const decoded: any = jsonwebtoken.decode(token);
+        const key = this.options.prefix + jti;
+        if (decoded.exp) {
+            await this.redis.setExp(key, 'true', 'EX', Math.floor(decoded.exp - Date.now() / 1000));
+        } else{
+            await this.redis.set(key, 'true');
+        }
+        return token;
     }
 
-    public destroy(jti: string): Promise<void> {
+    public destroy = (jti: string): Promise<boolean> => {
         const key = this.options.prefix + jti;
         return this.redis.del(key);
     }
