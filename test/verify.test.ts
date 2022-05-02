@@ -1,19 +1,23 @@
 import * as chai from 'chai';
-import * as redisMock from 'redis-mock';
-import JWTRedis, {TokenDestroyedError} from '../src/index';
+import JWTRedis from '../src/index';
 import {generateId} from "./util";
 import {TokenExpiredError} from "jsonwebtoken";
 import * as chaiAsPromised from "chai-as-promised";
+import {RedisClientType} from "redis";
+import * as redis from "redis";
 
-describe('Test destroy', () => {
+describe('Test verify', () => {
 
     const {expect} = chai;
     chai.use(chaiAsPromised);
 
     let jwtRedis: JWTRedis;
 
-    before(() => {
-        const redisClient = redisMock.createClient();
+    before(async () => {
+        const redisClient: RedisClientType = redis.createClient({
+            url: "redis://localhost:6379",
+        });
+        await redisClient.connect();
         jwtRedis = new JWTRedis(redisClient);
     });
 
@@ -59,7 +63,7 @@ describe('Test destroy', () => {
 
     it('4', (done) => {
         const key = generateId(10);
-        const payload = {jti: generateId(10), exp: new Date().getSeconds()};
+        const payload = {jti: generateId(10), exp: (Date.now() / 1000)};
         jwtRedis.sign(payload, key)
             .then((token: string) => {
                 expect(jwtRedis.verify<{jti: string}>(token, key)).to.be.rejectedWith(TokenExpiredError);

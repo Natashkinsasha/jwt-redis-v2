@@ -1,6 +1,5 @@
-import * as redis from 'redis';
 import * as jsonwebtoken from 'jsonwebtoken';
-import {Secret} from "jsonwebtoken";
+import {Secret, VerifyErrors} from "jsonwebtoken";
 import {SignOptions} from "jsonwebtoken";
 import Redis from "./Redis";
 import {GetPublicKeyOrSecret} from "jsonwebtoken";
@@ -8,6 +7,7 @@ import {VerifyOptions} from "jsonwebtoken";
 import {DecodeOptions} from "jsonwebtoken";
 import TokenInvalidError from "./error/TokenInvalidError";
 import TokenDestroyedError from "./error/TokenDestroyedError";
+import {RedisClientType} from "redis";
 
 
 export interface Options {
@@ -19,7 +19,7 @@ export default class JWTRedis {
     private readonly options: Options;
     private readonly redis: Redis;
 
-    constructor(private readonly redisClient: redis.RedisClient, options?: Options) {
+    constructor(private readonly redisClient: RedisClientType, options?: Options) {
         this.options = Object.assign({prefix: 'jwt_label:'}, options || {});
         this.redis = new Redis(redisClient);
     }
@@ -30,7 +30,11 @@ export default class JWTRedis {
         const decoded: any = jsonwebtoken.decode(token);
         const key = this.options.prefix + jti;
         if (decoded.exp) {
-            await this.redis.setExp(key, 'true', 'EX', Math.floor(decoded.exp - Date.now() / 1000));
+            const now = Date.now();
+            const duration = Math.floor(decoded.exp - (now / 1000));
+            if(duration > 0){
+                await this.redis.setExp(key, 'true',  duration);
+            }
         } else{
             await this.redis.set(key, 'true');
         }
@@ -48,7 +52,7 @@ export default class JWTRedis {
 
     public verify<T extends object & { jti?: string }>(token: string, secretOrPublicKey: string | Buffer | GetPublicKeyOrSecret, options?: VerifyOptions): Promise<T> {
         return new Promise((resolve, reject) => {
-            return jsonwebtoken.verify(token, secretOrPublicKey, options, (err: Error, decoded: T) => {
+            return jsonwebtoken.verify(token, secretOrPublicKey, options, (err: VerifyErrors, decoded: T) => {
                 if (err) {
                     return reject(err);
                 }

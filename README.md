@@ -30,6 +30,7 @@ var redis = require('redis');
 var JWTR =  require('jwt-redis').default;
 //ES6 import JWTR from 'jwt-redis';
 var redisClient = redis.createClient();
+await redisClient.connect();
 var jwtr = new JWTR(redisClient);
 
 var secret = 'secret';
